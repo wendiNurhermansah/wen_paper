@@ -58,7 +58,7 @@
                          <div class="form-group">
                               <label>Mapel</label>
                                  <div >
-                                  <select class="form-control" name="id_mapel" id="id_mapel" autocomplete="off">
+                                  <select class="form-control" name="m_pelajaran_id" id="m_pelajaran_id" autocomplete="off">
                                    </select>
                                  </div>
                           </div>
@@ -80,22 +80,22 @@
         val = $(this).val();
         option = "<option value=''>&nbsp;</option>";
         if(val == ""){
-            $('#id_mapel').html(option);
+            $('#m_pelajaran_id').html(option);
             
             selectOnChange();
         }else{
-            $('#id_mapel').html("<option value=''>Loading...</option>");
+            $('#m_pelajaran_id').html("<option value=''>Loading...</option>");
             url = "{{ route('mapelByJurusan', ':id') }}".replace(':id', val);
             $.get(url, function(data){
                 if(data){
                     $.each(data, function(index, value){
-                        option += "<option value='" + value.id + "'>" + value.n_mapel +"</li>";
+                        option += "<option value='" + value.m_pelajaran.id + "'>" + value.m_pelajaran.nama +"</li>";
                     });
-                    $('#id_mapel').empty().html(option);
+                    $('#m_pelajaran_id').empty().html(option);
 
-                    $("#id_mapel").val($("#id_mapel option:first").val()).trigger("change.select2");
+                    $("#m_pelajaran_id").val($("#m_pelajaran_id option:first").val()).trigger("change.select2");
                 }else{
-                    $('#id_mapel').html(option);
+                    $('#m_pelajaran_id').html(option);
                    
                     selectOnChange();
                 }

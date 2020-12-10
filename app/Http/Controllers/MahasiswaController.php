@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Jurusan;
 use App\Models\Mapel;
+use App\Models\m_pelajaran;
+use App\Models\jurusan_pelajaran;
 use DataTables;
 
 class MahasiswaController extends Controller
@@ -21,14 +23,16 @@ class MahasiswaController extends Controller
         
         $student = Student::all();
         $jurusan = Jurusan::select('id', 'n_jurusan')->get();
-        $mapel = Mapel::select('id', 'n_mapel')->get();
-        return view('mahasiswa.index', compact('student', 'jurusan', 'mapel'
+        $m_pelajaran = M_pelajaran::select('id', 'nama')->get();
+        
+        $jurusan_pelajaran = Jurusan_pelajaran::select('id', 'jurusan_id', 'm_pelajaran_id')->get();
+        return view('mahasiswa.index', compact('student', 'jurusan', 'm_pelajaran', 'jurusan_pelajaran'
     ));
     }
 
     public function mapelByJurusan($jurusan_id)
     {
-        return mapel::select('id', 'n_mapel')->where('jurusan_id', $jurusan_id)->get();
+        return jurusan_pelajaran::select('id', 'm_pelajaran_id')->with('m_pelajaran')->where('jurusan_id', $jurusan_id)->get();
     }
 
 
@@ -47,13 +51,15 @@ class MahasiswaController extends Controller
             {
                 return $p->jurusan->n_jurusan;
             })
-            ->editColumn('id_mapel', function($p)
-            {
-                return $p->mapel->n_mapel;
+
+            ->editColumn('m_pelajaran_id', function($p){
+                return $p->m_pelajaran->nama;
             })
-           
+            
+            
+          
             ->addIndexColumn()
-            ->rawColumns(['action'])
+            ->rawColumns(['action',])
             ->toJson();
     }
 
@@ -101,9 +107,11 @@ class MahasiswaController extends Controller
     public function show($id)
     {
         $jurusan = Jurusan::select('id', 'n_jurusan')->get();
-        $mapel = Mapel::select('id', 'n_mapel')->get();
-        $student = Student::with('jurusan', 'mapel')->where('id', $id)->first();
-         return view('mahasiswa.show', compact('student', 'jurusan', 'mapel', 'id'));
+        $m_pelajaran = M_pelajaran::select('id', 'nama')->get();
+         $jurusan_pelajaran = Jurusan_pelajaran::select('id', 'm_pelajaran_id')->get();
+        
+        $student = Student::with('jurusan', 'm_pelajaran')->where('id', $id)->first();
+         return view('mahasiswa.show', compact('student', 'jurusan','m_pelajaran', 'jurusan_pelajaran', 'id'));
         
     }
 
@@ -115,15 +123,16 @@ class MahasiswaController extends Controller
      */
     public function edit($id)
     {
-        $jurusan = Jurusan::select('id', 'n_jurusan')->get();
-        $mapel = Mapel::select('id', 'n_mapel')->get();
-
+         $jurusan = Jurusan::select('id', 'n_jurusan')->get();
+         $jurusan_pelajaran = Jurusan_pelajaran::select('id', 'm_pelajaran_id')->get();
+         $m_pelajaran = M_pelajaran::select('id', 'nama')->get();
          $student = Student::find($id);
  
          return view('mahasiswa.show', compact(
          'student',
         'jurusan',
-        'mapel',
+        'm_pelajaran',
+        'jurusan_pelajaran',
         'id'
     ));
     }

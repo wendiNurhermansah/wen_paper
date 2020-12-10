@@ -56,7 +56,7 @@
                                     </div>
                                     <div class="row">
                                         <label class="col-md-2 text-right s-12"><strong>MAPEL :</strong></label>
-                                        <label class="col-md-3 s-12">{{ $student->mapel->n_mapel }}</label>
+                                        <label class="col-md-3 s-12">{{ $student->m_pelajaran->nama }}</label>
                                     </div>
                                    
                                 </div>

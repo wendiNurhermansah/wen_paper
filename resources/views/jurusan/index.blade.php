@@ -24,6 +24,7 @@
                                 <thead>
                                     <th width="30">No</th>
                                     <th>Nama Jurusan</th>
+                                    <th>Jurusan Pelajaran</th>
                                     <th width="60"></th>
                                     
                                     
@@ -78,6 +79,7 @@
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, align: 'center', className: 'text-center'},
             {data: 'n_jurusan', name: 'n_jurusan'},
+            {data: 'jurusan_pelajaran', name: 'jurusan_pelajaran', className: 'text-center'},
             {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'}
         ]
     });
@@ -138,34 +140,7 @@
         });
     }
 
-    function remove(id){
-        $.confirm({
-            title: '',
-            content: 'Apakah Anda yakin akan menghapus data ini ?',
-            icon: 'icon icon-question amber-text',
-            theme: 'modern',
-            closeIcon: true,
-            animation: 'scale',
-            type: 'red',
-            buttons: {
-                ok: {
-                    text: "ok!",
-                    btnClass: 'btn-primary',
-                    keys: ['enter'],
-                    action: function(){
-                        $.post("{{ route('jurusan.destroy', ':id') }}".replace(':id', id), {'_method' : 'DELETE'}, function(data) {
-                           table.api().ajax.reload();
-                            if(id == $('#id').val()) add();
-                        }, "JSON").fail(function(){
-                            reload();
-                        });
-                    }
-                },
-                cancel: function(){}
-            }
-        });
-    }
-
+    
 
     
 

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\jurusan;
 use App\Models\mapel;
 use DataTables;
+use App\Models\jurusan_pelajaran;
+use App\Models\m_pelajaran;
+
 
 class JurusanController extends Controller
 {
@@ -16,7 +19,11 @@ class JurusanController extends Controller
      */
     public function index()
     {
-        return view ('jurusan.index');
+        $jurusan_pelajaran = Jurusan_pelajaran::select('id', 'jurusan_id', 'm_pelajaran_id')->get();
+        $m_pelajaran = M_pelajaran::select('id', 'nama')->get();
+        $jurusan = Jurusan::select('id', 'n_jurusan')->get();
+        
+        return view ('jurusan.index', compact('jurusan','jurusan_pelajaran', 'm_pelajaran'));
     }
 
     public function api()
@@ -24,17 +31,19 @@ class JurusanController extends Controller
         $jurusan = Jurusan::all();
         return DataTables::of($jurusan)
             ->addColumn('action', function ($p) {
-                return "<a href='#' onclick='edit(" . $p->id . ")' title='Edit Permission'><i class='icon-pencil mr-1'></i></a>
-                <a href='#' onclick='remove(" . $p->id . ")' class='text-danger' title='Hapus Role'><i class='fas fa-trash-alt'></i></a>";
+                return "<a href='#' onclick='edit(" . $p->id . ")' title='Edit Permission'><i class='icon-pencil mr-1'></i></a>";
             })
-            ->addColumn('n_jurusan', function ($p) {
-                return "<a href='" . route('jurusan.show', $p->id) . "' class='text-primary' title='Show Data'> . $p->n_jurusan . </a>";
-
-            })                
+           
+            
+            ->addColumn('jurusan_pelajaran', function ($p) {
+                    $data = jurusan_pelajaran::where('jurusan_id', $p->id)->get();
+                    
+                return count($data). " <a href='" .route('jurusan.show', $p->id) . "' class='text-success pull-right' title='liat_pelajaran'><i class='icon-clipboard-list2 mr-1'></i></a>";
+            })
             
             
             ->addIndexColumn()
-            ->rawColumns(['action', 'n_jurusan'])
+            ->rawColumns(['action', 'jurusan_pelajaran'])
             ->toJson();
     }
 
@@ -64,6 +73,7 @@ class JurusanController extends Controller
         $input = $request->all();
         Jurusan::create($input);
 
+
         return response()->json([
             'message' => 'Data berhasil tersimpan.'
         ]);
@@ -78,10 +88,14 @@ class JurusanController extends Controller
     public function show($id)
     {
         $jurusan = Jurusan::findOrfail($id);
-        $mapel = mapel::where('jurusan_id', $id)->get();
+        $m_pelajaran = M_pelajaran::select('id', 'nama')->get();
+        $jurusans = Jurusan::select('id', 'n_jurusan')->where('id', $id)->get();
+        $jurusan_pelajaran = jurusan_pelajaran::where('jurusan_id', $id)->get();
         return view('jurusan.show', compact(
             'jurusan',
-            'mapel'
+            'jurusans',
+            'jurusan_pelajaran',
+            'm_pelajaran'
         ));
     }
 
@@ -134,4 +148,25 @@ class JurusanController extends Controller
             'message' => 'Data berhsil di Hapus'
         ]);
     }
+
+    public function tambah(Request $request)
+    {
+        $request->validate([
+            'jurusan_id'       => 'required',
+            'm_pelajaran_id' => 'required'
+            
+        ]);
+
+        $jurusan_pelajaran = new jurusan_pelajaran();
+        $jurusan_pelajaran->jurusan_id      = $request->jurusan_id;
+        $jurusan_pelajaran->m_pelajaran_id = $request->m_pelajaran_id;
+        $jurusan_pelajaran->save();
+   
+       
+        return response()->json([
+            'message' => 'Data berhasil tersimpan.'
+        ]);
+    }
+
+    
 }

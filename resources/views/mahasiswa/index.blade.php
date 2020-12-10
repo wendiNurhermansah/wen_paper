@@ -105,7 +105,7 @@
                          <div class="form-group">
                               <label>Mapel</label>
                                  <div >
-                                  <select class="form-control select2" name="id_mapel" id="id_mapel" autocomplete="off" required>
+                                  <select class="form-control select2" name="m_pelajaran_id" id="m_pelajaran_id" autocomplete="off" required>
                                    </select>
                                  </div>
                           </div>
@@ -149,7 +149,7 @@
                 {data: 'jenis_kelamin', name: 'jenis_kelamin'},
                 {data: 'alamat', name: 'alamat'},
                 {data: 'id_jurusan', name: 'id_jurusan'},
-                {data: 'id_mapel', name: 'id_mapel'},
+                {data: 'm_pelajaran_id', name: 'm_pelajaran_id'},
                 {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'}
             ]
         });
@@ -170,22 +170,22 @@
         val = $(this).val();
         option = "<option value=''>pilih:</option>";
         if(val == ""){
-            $('#id_mapel').html(option);
+            $('#m_pelajaran_id').html(option);
             
             selectOnChange();
         }else{
-            $('#id_mapel').html("<option value=''>Loading...</option>");
+            $('#m_pelajaran_id').html("<option value=''>Loading...</option>");
             url = "{{ route('mapelByJurusan', ':id') }}".replace(':id', val);
             $.get(url, function(data){
                 if(data){
                     $.each(data, function(index, value){
-                        option += "<option value='" + value.id + "'>" + value.n_mapel +"</li>";
+                        option += "<option value='" + value.m_pelajaran.id + "'>" + value.m_pelajaran.nama +"</li>";
                     });
-                    $('#id_mapel').empty().html(option);
+                    $('#m_pelajaran_id').empty().html(option);
 
-                    $("#id_mapel").val($("#id_mapel option:first").val()).trigger("change.select2");
+                    $("#m_pelajaran_id").val($("#m_pelajaran_id option:first").val()).trigger("change.select2");
                 }else{
-                    $('#id_mapel').html(option);
+                    $('#m_pelajaran_id').html(option);
                    
                     selectOnChange();
                 }

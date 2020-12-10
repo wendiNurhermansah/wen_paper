@@ -75,24 +75,30 @@
             @can('Mahasiswa')
             <li class="header"><strong>DATA</strong></li>
             <li class="treeview"><a href="{{ url('/mahasiswa') }}">
-                <i class="icon icon-school purple-text s-18"></i> <span><Datal>Mahasiswa</Datal></span> <i
+                <i class="icon icon-school purple-text s-18"></i> <span><Data>Mahasiswa</Data></span> <i
                     class="icon icon-angle-right s-18 pull-right"></i>
             </a>
             </li>
             
 
             <li class="treeview"><a href="{{ url('/jurusan') }}">
-                <i class="icon icon-book purple-text s-18"></i> <span><Datal>Jurusan</Datal></span> <i
+                <i class="icon icon-book purple-text s-18"></i> <span><Data>Jurusan</Data></span> <i
                     class="icon icon-angle-right s-18 pull-right"></i>
             </a>
             </li>
 
             <li class="treeview"><a href="{{ url('/matapelajaran') }}">
-                <i class="icon icon-file purple-text s-18"></i> <span><Datal>Mata Pelajaran</Datal></span> <i
+                <i class="icon icon-file purple-text s-18"></i> <span><Data>Mata Pelajaran</Data></span> <i
                     class="icon icon-angle-right s-18 pull-right"></i>
             </a>
             </li>
             @endcan
+
+            <li class="treeview"><a href="{{ url('/jupel') }}">
+                <i class="icon icon-plus purple-text s-18"></i> <span><Data>Tambah Jurusan Dan Pelajaran</Data></span> <i
+                    class="icon icon-angle-right s-18 pull-right"></i>
+            </a>
+            </li>
         
         </ul>
     </section>

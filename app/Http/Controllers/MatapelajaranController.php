@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DataTables;
 use App\Models\mapel;
+use App\Models\m_pelajaran;
+use App\Models\jurusan_pelajaran;
+use App\Models\jurusan;
 
 class MatapelajaranController extends Controller
 {
@@ -15,16 +18,17 @@ class MatapelajaranController extends Controller
      */
     public function index()
     {
-        return view('matapelajaran.index');
+        $jurusan = Jurusan::select('id', 'n_jurusan')->get();
+        return view('matapelajaran.index', compact('jurusan'));
     }
 
     public function api()
     {
-        $mapel = Mapel::all();
-        return DataTables::of($mapel)
+        $m_pelajaran = M_pelajaran::all();
+        return DataTables::of($m_pelajaran)
             ->addColumn('action', function ($p) {
-                return "<a href='#' onclick='edit(" . $p->id . ")' title='Edit Permission'><i class='icon-pencil mr-1'></i></a>
-                <a href='#' onclick='remove(" . $p->id . ")' class='text-danger' title='Hapus Role'><i class='fas fa-trash-alt'></i></a>";
+                return "<a href='#' onclick='edit(" . $p->id . ")' title='Edit Permission'><i class='icon-pencil mr-1'></i></a>";
+                
             })
             ->addIndexColumn()
             ->rawColumns(['action'])
@@ -50,13 +54,17 @@ class MatapelajaranController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'n_mapel' => 'required',
-            'jurusan_id'=> 'required',
-            
+            'nama' => 'required',
         ]);
-
+            
         $input = $request->all();
-        Mapel::create($input);
+
+        $mataPelajaran = M_pelajaran::create($input);
+
+        jurusan_pelajaran::create([
+            'id_jurusan' => $request->id_jurusan,
+            'id_matapelajaran' => $mataPelajaran->id,
+        ]);
 
         return response()->json([
             'message' => 'Data berhasil tersimpan.'
@@ -82,7 +90,7 @@ class MatapelajaranController extends Controller
      */
     public function edit($id)
     {
-        return Mapel::find($id);
+        return M_pelajaran::find($id);
     }
 
     /**
@@ -95,14 +103,14 @@ class MatapelajaranController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'n_mapel' => 'required',
-            'jurusan_id'=> 'required',
+            'nama' => 'required',
+            
             
         ]);
 
         $input = $request->all();
-        $mapel = Mapel::findOrfail($id);
-        $mapel->update($input);
+        $m_pelajaran = M_pelajaran::findOrfail($id);
+        $m_pelajaran->update($input);
 
         return response()->json([
             'message' => 'data berhasil diperbaharui.'
@@ -117,7 +125,7 @@ class MatapelajaranController extends Controller
      */
     public function destroy($id)
     {
-        Mapel::destroy($id);
+        M_pelajaran::destroy($id);
 
         return response()->json([
             'message' =>'data berhasil di hapus.'

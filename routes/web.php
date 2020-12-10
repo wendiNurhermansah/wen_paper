@@ -43,11 +43,22 @@ Route::post('pengguna/api', 'PenggunaController@api')->name('pengguna.api');
 Route::get('/pengguna/editpassword/{id}', 'PenggunaController@editpassword')->name('pengguna.editpassword');
 Route::post('/pengguna/updatePassword/{id}', 'PenggunaController@updatePassword')->name('pengguna.updatePassword');
 
+
 Route::resource('jurusan', 'JurusanController');
 Route::post('jurusan/api', 'JurusanController@api')->name('jurusan.api');
+Route::post('jurusan/tambah', 'JurusanController@tambah')->name('jurusan.tambah');
+Route::get('listmatapelajaran/{id}','JurusanController@listPelajaran')->name('listmatapelajaran');
+
+
+
 
 Route::resource('matapelajaran', 'MatapelajaranController');
 Route::post('matapelajaran/api', 'MatapelajaranController@api')->name('matapelajaran.api');
+
+Route::resource('jupel', 'JupelController');
+Route::post('jupel/api', 'JupelController@api')->name('jupel.api');
+
+
 
 });
 

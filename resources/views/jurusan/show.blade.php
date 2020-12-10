@@ -18,9 +18,11 @@
                         <a class="nav-link" href="{{ url('jurusan') }}"><i class="icon icon-arrow_back"></i>Semua Data</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active show" id="tab1" data-toggle="tab" href="#semua-data" role="tab"><i class="icon icon-user"></i>{{ $jurusan->n_jurusan }}</a>
+                        <a class="nav-link" id="tab1" data-toggle="tab" href="#semua-data" role="tab"><i class="icon icon-user"></i>{{ $jurusan->n_jurusan }}</a>
                     </li>
-                    
+                    <li class="nav-item">
+                        <a class="nav-link" id="tab2" data-toggle="tab" href="#tambah" role="tab"><i class="icon icon-plus"></i>Tambah Data</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -34,7 +36,7 @@
                             <h6 class="card-header"><strong>Data Mata Pelajaran</strong></h6>
                             <div class="card-body">
                                 <div class="col-md-12">
-                                <table id="dataTable" class="table table-striped table-bordered" style="width:100%">
+                                    <table id="dataTable" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                         <tr>
                                             <th width="30">No</th>
@@ -45,10 +47,10 @@
                                         @php
                                            $no=1 ;             
                                         @endphp
-                                        @foreach ($mapel as $i)   
+                                        @foreach ($jurusan_pelajaran as $i)   
                                         <tr>
                                             <td>{{ $no }}</td>
-                                            <td>{{ $i->n_mapel }}</td>
+                                            <td>{{ $i->m_pelajaran->nama }}</td>
                                         </tr>
                                         @php
                                         $no++;
@@ -56,18 +58,20 @@
                                         @endforeach
                                        
                                         </tbody>
-                                    </table>
-                                    
+                                    </table>   
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
             </div>
-            
+           @include('jurusan.tambah')
         </div>
     </div>
 </div>
+
+
 @endsection
 
 
