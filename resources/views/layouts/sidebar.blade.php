@@ -16,7 +16,7 @@
                         <img class="user_avatar" src="{{asset('assets/img/dummy/u2.png')}}" alt="User Image">
                     </div>
                     <div class="float-left info">
-                        <h6 class="font-weight-light mt-2 mb-1">{{ Auth::user()->username }}</h6>
+                        <h6 class="font-weight-light mt-2 mb-1"></h6>
                         <a href="#"><i class="icon-circle text-primary blink"></i> Online</a>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
 
 
         <ul class="sidebar-menu">
-            @can('Mahasiswa')
+            
             <li class="header"><strong>DATA</strong></li>
             <li class="treeview"><a href="{{ url('/mahasiswa') }}">
                 <i class="icon icon-school purple-text s-18"></i> <span><Data>Mahasiswa</Data></span> <i
@@ -80,7 +80,7 @@
             </a>
             </li>
             
-
+            @can('Mahasiswa')
             <li class="treeview"><a href="{{ url('/jurusan') }}">
                 <i class="icon icon-book purple-text s-18"></i> <span><Data>Jurusan</Data></span> <i
                     class="icon icon-angle-right s-18 pull-right"></i>
@@ -92,14 +92,13 @@
                     class="icon icon-angle-right s-18 pull-right"></i>
             </a>
             </li>
-            @endcan
-
+           
             <li class="treeview"><a href="{{ url('/jupel') }}">
                 <i class="icon icon-plus purple-text s-18"></i> <span><Data>Tambah Jurusan Dan Pelajaran</Data></span> <i
                     class="icon icon-angle-right s-18 pull-right"></i>
             </a>
             </li>
-        
+            @endcan
         </ul>
     </section>
 </aside>

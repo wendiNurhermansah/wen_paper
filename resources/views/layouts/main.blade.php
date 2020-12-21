@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/jquery-confirm.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/jquery-fancybox.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/buttons.dataTables.min.css') }}">
+    
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
     <style>
         .loader {
@@ -60,6 +62,7 @@
     <!-- akhir footer -->
 <!--/#app -->
 <script src="{{asset('assets/js/app.js')}}"></script>
+
 <script src="{{ asset('assets/js/jquery-confirm.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery-fancybox.min.js') }}"></script>
 <script type="text/javascript">
