@@ -58,7 +58,16 @@ Route::post('matapelajaran/api', 'MatapelajaranController@api')->name('matapelaj
 Route::resource('jupel', 'JupelController');
 Route::post('jupel/api', 'JupelController@api')->name('jupel.api');
 
+Route::resource('sejarah', 'SejarahController');
+Route::post('profile/api', 'SejarahController@api')->name('profile.api');
 
+Route::resource('sambutan', 'SambutanController');
+Route::post('sambutan/api', 'SambutanController@api')->name('sambutan.api');
+
+Route::resource('visi', 'VmController');
+Route::post('visi/api', 'VmController@api')->name('visi.api');
+
+Route::resource('pendidik', 'PendidikController');
 
 });
 

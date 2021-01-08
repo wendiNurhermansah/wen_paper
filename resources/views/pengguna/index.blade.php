@@ -250,6 +250,7 @@
         $(this).addClass('was-validated');
     });
 
+    
 </script>
 
 @endsection

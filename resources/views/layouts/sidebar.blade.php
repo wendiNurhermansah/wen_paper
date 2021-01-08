@@ -100,6 +100,59 @@
             </li>
             @endcan
         </ul>
+
+        <ul class="sidebar-menu">
+            
+            <li class="header"><strong><b>PAUD</b></strong></li>
+            <li class="header"><strong>PROFILE SEKOLAH</strong></li>
+            <li class="treeview"><a href="{{ url('/sejarah') }}">
+                <i class="icon icon-book text-success s-18"></i> <span><Data>Sejarah</Data></span> <i
+                    class="icon icon-angle-right s-18 pull-right"></i>
+            </a>
+            </li>
+
+            <li class="treeview"><a href="{{ url('/sambutan') }}">
+                <i class="icon icon-school text-success s-18"></i> <span><Data>Sambutan Kepala Sekolah</Data></span> <i
+                    class="icon icon-angle-right s-18 pull-right"></i>
+            </a>
+            </li>
+
+            <li class="treeview"><a href="{{ url('/visi') }}">
+                <i class="icon icon-list-alt  text-success s-18"></i> <span><Data>Visi & Misi</Data></span> <i
+                    class="icon icon-angle-right s-18 pull-right"></i>
+            </a>
+            </li>
+
+            <li class="treeview"><a href="{{ url('/pendidik') }}">
+                <i class="icon icon-user text-success s-18"></i> <span><Data>Tenaga Pendidik</Data></span> <i
+                    class="icon icon-angle-right s-18 pull-right"></i>
+            </a>
+            </li>
+
+        </ul>
+
+        <ul class="sidebar-menu">
+            
+            <li class="header"><strong>BERITA</strong></li>
+            <li class="treeview"><a href="{{ url('') }}">
+                <i class="icon icon-columns text-primary s-18"></i> <span><Data>Berita Kita</Data></span> <i
+                    class="icon icon-angle-right s-18 pull-right"></i>
+            </a>
+            </li>
+
+            <li class="treeview"><a href="{{ url('') }}">
+                <i class="icon icon-briefcase text-primary s-18"></i> <span><Data>Info Sekolah</Data></span> <i
+                    class="icon icon-angle-right s-18 pull-right"></i>
+            </a>
+            </li>
+
+            <li class="treeview"><a href="{{ url('') }}">
+                <i class="icon icon-camera-retro  text-primary s-18"></i> <span><Data>Gallery</Data></span> <i
+                    class="icon icon-angle-right s-18 pull-right"></i>
+            </a>
+            </li>
+
+        </ul>
     </section>
 </aside>
 <!--Sidebar End-->
