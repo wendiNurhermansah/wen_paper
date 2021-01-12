@@ -134,19 +134,19 @@
         <ul class="sidebar-menu">
             
             <li class="header"><strong>BERITA</strong></li>
-            <li class="treeview"><a href="{{ url('') }}">
+            <li class="treeview"><a href="{{ url('/berita') }}">
                 <i class="icon icon-columns text-primary s-18"></i> <span><Data>Berita Kita</Data></span> <i
                     class="icon icon-angle-right s-18 pull-right"></i>
             </a>
             </li>
 
-            <li class="treeview"><a href="{{ url('') }}">
+            <li class="treeview"><a href="{{ url('/infosekolah') }}">
                 <i class="icon icon-briefcase text-primary s-18"></i> <span><Data>Info Sekolah</Data></span> <i
                     class="icon icon-angle-right s-18 pull-right"></i>
             </a>
             </li>
 
-            <li class="treeview"><a href="{{ url('') }}">
+            <li class="treeview"><a href="{{ url('/gallery') }}">
                 <i class="icon icon-camera-retro  text-primary s-18"></i> <span><Data>Gallery</Data></span> <i
                     class="icon icon-angle-right s-18 pull-right"></i>
             </a>

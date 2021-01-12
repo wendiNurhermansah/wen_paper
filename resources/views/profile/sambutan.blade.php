@@ -222,6 +222,7 @@
         }
         $(this).addClass('was-validated');
     });
+    
     function remove(id){
         $.confirm({
             title: '',

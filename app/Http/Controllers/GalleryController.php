@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\sambutan;
 use DataTables;
+use App\Models\gallery;
 
-class SambutanController extends Controller
+class GalleryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,13 +15,12 @@ class SambutanController extends Controller
      */
     public function index()
     {
-        return view('profile.sambutan');
+        return view('berita.gallery');
     }
 
-    public function api()
-    {
-        $sambutan = Sambutan::all();
-        return DataTables::of($sambutan)
+    public function api(){
+        $gallery = gallery::all();
+        return DataTables::of($gallery)
             ->addColumn('action', function($p){
                 return " 
                 <a href='#' onclick='remove(" . $p->id . ")' class='text-danger' title='Hapus Role'><i class='fas fa-trash-alt'></i></a>";
@@ -30,7 +29,6 @@ class SambutanController extends Controller
             ->addIndexColumn()
             ->rawColumns(['action',])
             ->toJson();
-            
     }
 
     /**
@@ -52,24 +50,23 @@ class SambutanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'isi_sambutan' => 'required',
+            'n_gallery' => 'required',
             'gambar' => 'required|mimes:png,jpg,jpeg|max:2024'
+
         ]);
 
         $file     = $request->file('gambar');
         $fileName = time() . "." . $file->getClientOriginalName();
         $request->file('gambar')->move("images/ava/", $fileName);
 
-        $sambutan = new sambutan();
-        $sambutan->isi_sambutan   =$request->isi_sambutan;
-        $sambutan->gambar     = $fileName;
-        $sambutan->save();
+        $gallery = new gallery();
+        $gallery->n_gallery = $request->n_gallery;
+        $gallery->gambar     = $fileName;
+        $gallery->save();
 
         return response()->json([
             'message' => 'Data berhasil tersimpan.'
         ]);
-
-
     }
 
     /**
@@ -114,10 +111,9 @@ class SambutanController extends Controller
      */
     public function destroy($id)
     {
-        sambutan::destroy($id);
-
-        return response()->jsons([
-            'massage' => 'data berhasil di hapus.'
+        gallery::destroy($id);
+        return response()->json([
+            'massage' => 'data berhasl di hapus.'
         ]);
     }
 }

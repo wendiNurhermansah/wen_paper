@@ -18,6 +18,21 @@ class PendidikController extends Controller
         return view('profile.pendidik');
     }
 
+    public function api()
+    {
+        $pendidik = Pendidik::all();
+        return DataTables::of($pendidik)
+            ->addColumn('action', function($p){
+                return " 
+                <a href='#' onclick='remove(" . $p->id . ")' class='text-danger' title='Hapus Role'><i class='fas fa-trash-alt'></i></a>";
+            })
+
+            ->addIndexColumn()
+            ->rawColumns(['action',])
+            ->toJson();
+            
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -36,7 +51,23 @@ class PendidikController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_pendidik' => 'required',
+            'gambar' => 'required|mimes:png,jpg,jpeg|max:2024'
+        ]);
+
+        $file     = $request->file('gambar');
+        $fileName = time() . "." . $file->getClientOriginalName();
+        $request->file('gambar')->move("images/ava/", $fileName);
+
+        $pendidik = new pendidik();
+        $pendidik->nama_pendidik   =$request->nama_pendidik;
+        $pendidik->gambar     = $fileName;
+        $pendidik->save();
+
+        return response()->json([
+            'message' => 'Data berhasil tersimpan.'
+        ]);
     }
 
     /**
@@ -81,6 +112,10 @@ class PendidikController extends Controller
      */
     public function destroy($id)
     {
-        //
+        pendidik::destroy($id);
+
+        return response()->js([
+            'message' => 'Data berhasil dihapus.'
+        ]);
     }
 }

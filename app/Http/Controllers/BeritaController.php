@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\sambutan;
 use DataTables;
+use App\Models\berita;
 
-class SambutanController extends Controller
+class BeritaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,13 +15,14 @@ class SambutanController extends Controller
      */
     public function index()
     {
-        return view('profile.sambutan');
+        
+        return view('berita.berita');
     }
 
-    public function api()
-    {
-        $sambutan = Sambutan::all();
-        return DataTables::of($sambutan)
+
+    public function api(){
+        $berita = Berita::all();
+        return DataTables::of($berita)
             ->addColumn('action', function($p){
                 return " 
                 <a href='#' onclick='remove(" . $p->id . ")' class='text-danger' title='Hapus Role'><i class='fas fa-trash-alt'></i></a>";
@@ -30,7 +31,6 @@ class SambutanController extends Controller
             ->addIndexColumn()
             ->rawColumns(['action',])
             ->toJson();
-            
     }
 
     /**
@@ -52,23 +52,25 @@ class SambutanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'isi_sambutan' => 'required',
+            'judul' => 'required',
+            'isi_berita' => 'required',
             'gambar' => 'required|mimes:png,jpg,jpeg|max:2024'
+
         ]);
 
         $file     = $request->file('gambar');
         $fileName = time() . "." . $file->getClientOriginalName();
         $request->file('gambar')->move("images/ava/", $fileName);
 
-        $sambutan = new sambutan();
-        $sambutan->isi_sambutan   =$request->isi_sambutan;
-        $sambutan->gambar     = $fileName;
-        $sambutan->save();
+        $berita = new berita();
+        $berita->judul = $request->judul;
+        $berita->isi_berita   =$request->isi_berita;
+        $berita->gambar     = $fileName;
+        $berita->save();
 
         return response()->json([
             'message' => 'Data berhasil tersimpan.'
         ]);
-
 
     }
 
@@ -80,7 +82,7 @@ class SambutanController extends Controller
      */
     public function show($id)
     {
-        //
+    
     }
 
     /**
@@ -103,7 +105,7 @@ class SambutanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       
     }
 
     /**
@@ -114,10 +116,9 @@ class SambutanController extends Controller
      */
     public function destroy($id)
     {
-        sambutan::destroy($id);
-
-        return response()->jsons([
-            'massage' => 'data berhasil di hapus.'
+        berita::destroy($id);
+        return response()->json([
+            'massage' => 'Data Berhasil di hapus.'
         ]);
     }
 }

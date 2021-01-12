@@ -8,7 +8,7 @@
                 <div class="col">
                     <h4>
                         <i class="icon icon-users mr-2"></i>
-                        DAFTAR TENAGA PENDIDIK
+                        INFO SEKOLAH
                     </h4>
                 </div>
             </div>
@@ -35,8 +35,8 @@
                                     <table id="dataTable" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <th width="30">NO</th>
-                                            <th>NAMA PENDIDIK</th>
-                                            <th>GAMBAR</th>
+                                            <th>INFO SEKOLAH</th>
+                                            <th>Gambar</th>
                                             <th width="60">AKSI</th>
                                         </thead>
                                         <tbody></tbody>
@@ -56,9 +56,9 @@
                      <form class="needs-validation" id="form" method="POST"  enctype="multipart/form-data" novalidate>
                         @csrf
                         <div class="form-group">
-                            <label for="nama_pendidik">NAMA PENDIDIK</label>
-                            <input type="textarea" class="form-control @error('nama_pendidik') is-invalid @enderror" id="nama_pendidik" placeholder="masukan nama pendidik" name="nama_pendidik" value="{{ old('nama_pendidik') }}" required>
-                            @error('nama_pendidik')
+                            <label for="nama_fasilitas">INFO SEKOLAH</label>
+                            <input type="textarea" class="form-control @error('nama_fasilitas') is-invalid @enderror" id="nama_fasilitas" placeholder="masukan nama fasilitas" name="nama_fasilitas" value="{{ old('nama_fasilitas') }}" required>
+                            @error('nama_fasilitas')
                                 <div class="valid-feedback">
                                     {{ $message }}
                                 </div>
@@ -100,18 +100,18 @@
 
 @section('script')
 <script type="text/javascript">
-    var table = $('#dataTable').dataTable({
+     var table = $('#dataTable').dataTable({
         processing: true,
         serverSide: true,
         pageLenght:15,
         order: [0, 'asc'],
         ajax: {
-            url: "{{ route('pendidik.api')}}",
+            url: "{{ route('infosekolah.api')}}",
             method: 'POST'
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, align: 'center', className: 'text-center'},
-            {data: 'nama_pendidik', name: 'nama_pendidik'},
+            {data: 'nama_fasilitas', name: 'nama_fasilitas'},
             {data: 'gambar', name: 'gambar'},
             {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'},
 
@@ -195,7 +195,7 @@
         }
         else{
             $('#alert').html('');
-            url = "{{ route('pendidik.store') }}",
+            url = "{{ route('infosekolah.store') }}",
             $.ajax({
                 url : url,
                 type : 'POST',
@@ -238,7 +238,7 @@
                     btnClass: 'btn-primary',
                     keys: ['enter'],
                     action: function(){
-                        $.post("{{ route('pendidik.destroy', ':id') }}".replace(':id', id), {'_method' : 'DELETE'},function(data){
+                        $.post("{{ route('infosekolah.destroy', ':id') }}".replace(':id', id), {'_method' : 'DELETE'},function(data){
                             table.api().ajax.reload();
                             if(id == $('#id').val()) add();
                         }, "JSON").fail(
@@ -251,6 +251,7 @@
             }
         });
     }
+
 
 </script>
     

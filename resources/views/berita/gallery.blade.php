@@ -8,7 +8,7 @@
                 <div class="col">
                     <h4>
                         <i class="icon icon-users mr-2"></i>
-                        DAFTAR TENAGA PENDIDIK
+                        Gallery
                     </h4>
                 </div>
             </div>
@@ -35,8 +35,8 @@
                                     <table id="dataTable" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <th width="30">NO</th>
-                                            <th>NAMA PENDIDIK</th>
-                                            <th>GAMBAR</th>
+                                            <th>Gallery</th>
+                                            <th>Gambar</th>
                                             <th width="60">AKSI</th>
                                         </thead>
                                         <tbody></tbody>
@@ -56,9 +56,9 @@
                      <form class="needs-validation" id="form" method="POST"  enctype="multipart/form-data" novalidate>
                         @csrf
                         <div class="form-group">
-                            <label for="nama_pendidik">NAMA PENDIDIK</label>
-                            <input type="textarea" class="form-control @error('nama_pendidik') is-invalid @enderror" id="nama_pendidik" placeholder="masukan nama pendidik" name="nama_pendidik" value="{{ old('nama_pendidik') }}" required>
-                            @error('nama_pendidik')
+                            <label for="n_gallery">Gallery</label>
+                            <input type="textarea" class="form-control @error('n_gallery') is-invalid @enderror" id="n_gallery" placeholder="masukan nama fasilitas" name="n_gallery" value="{{ old('n_gallery') }}" required>
+                            @error('n_gallery')
                                 <div class="valid-feedback">
                                     {{ $message }}
                                 </div>
@@ -99,19 +99,19 @@
 @endsection
 
 @section('script')
-<script type="text/javascript">
+ <script type="text/javascript">
     var table = $('#dataTable').dataTable({
         processing: true,
         serverSide: true,
         pageLenght:15,
         order: [0, 'asc'],
         ajax: {
-            url: "{{ route('pendidik.api')}}",
+            url: "{{ route('gallery.api')}}",
             method: 'POST'
         },
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false, align: 'center', className: 'text-center'},
-            {data: 'nama_pendidik', name: 'nama_pendidik'},
+            {data: 'n_gallery', name: 'n_gallery'},
             {data: 'gambar', name: 'gambar'},
             {data: 'action', name: 'action', orderable: false, searchable: false, className: 'text-center'},
 
@@ -195,7 +195,7 @@
         }
         else{
             $('#alert').html('');
-            url = "{{ route('pendidik.store') }}",
+            url = "{{ route('gallery.store') }}",
             $.ajax({
                 url : url,
                 type : 'POST',
@@ -238,7 +238,7 @@
                     btnClass: 'btn-primary',
                     keys: ['enter'],
                     action: function(){
-                        $.post("{{ route('pendidik.destroy', ':id') }}".replace(':id', id), {'_method' : 'DELETE'},function(data){
+                        $.post("{{ route('gallery.destroy', ':id') }}".replace(':id', id), {'_method' : 'DELETE'},function(data){
                             table.api().ajax.reload();
                             if(id == $('#id').val()) add();
                         }, "JSON").fail(
@@ -251,7 +251,6 @@
             }
         });
     }
-
-</script>
+ </script>
     
 @endsection

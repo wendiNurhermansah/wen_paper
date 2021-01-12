@@ -68,6 +68,16 @@ Route::resource('visi', 'VmController');
 Route::post('visi/api', 'VmController@api')->name('visi.api');
 
 Route::resource('pendidik', 'PendidikController');
+Route::post('pendidik/api', 'PendidikController@api')->name('pendidik.api');
+
+Route::resource('berita', 'BeritaController');
+Route::post('berita/api', 'BeritaController@api')->name('berita.api');
+
+Route::resource('infosekolah', 'InfoController');
+Route::post('infosekolah/api', 'infoController@api')->name('infosekolah.api');
+
+Route::resource('gallery', 'GalleryController');
+Route::post('gallery/api', 'GalleryController@api')->name('gallery.api');
 
 });
 
