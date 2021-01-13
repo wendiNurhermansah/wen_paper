@@ -129,6 +129,13 @@
             </a>
             </li>
 
+            <li class="treeview"><a href="{{ url('/pendaftaran') }}">
+                <i class="icon icon-users text-danger s-18"></i> <span><Data>Pendaftaran</Data></span> <i
+                    class="icon icon-angle-right s-18 pull-right"></i>
+            </a>
+            </li>
+
+
         </ul>
 
         <ul class="sidebar-menu">
@@ -148,6 +155,18 @@
 
             <li class="treeview"><a href="{{ url('/gallery') }}">
                 <i class="icon icon-camera-retro  text-primary s-18"></i> <span><Data>Gallery</Data></span> <i
+                    class="icon icon-angle-right s-18 pull-right"></i>
+            </a>
+            </li>
+
+            <li class="treeview"><a href="{{ url('/agenda') }}">
+                <i class="icon icon-file-text  text-info s-18"></i> <span><Data>Agenda</Data></span> <i
+                    class="icon icon-angle-right s-18 pull-right"></i>
+            </a>
+            </li>
+
+            <li class="treeview"><a href="{{ url('/pengumuman') }}">
+                <i class="icon icon-bullhorn  text-danger s-18"></i> <span><Data>Pengumuman</Data></span> <i
                     class="icon icon-angle-right s-18 pull-right"></i>
             </a>
             </li>

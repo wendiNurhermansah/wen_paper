@@ -79,6 +79,15 @@ Route::post('infosekolah/api', 'infoController@api')->name('infosekolah.api');
 Route::resource('gallery', 'GalleryController');
 Route::post('gallery/api', 'GalleryController@api')->name('gallery.api');
 
+Route::resource('pendaftaran', 'PendaftaranController');
+Route::post('pendaftaran/api', 'PendaftaranController@api')->name('pendaftaran.api');
+
+Route::resource('agenda', 'AgendaController');
+Route::post('agenda/api', 'AgendaController@api')->name('agenda.api');
+
+Route::resource('pengumuman', 'PengumumanController');
+Route::post('pengumuman/api', 'PengumumanController@api')->name('pengumuman.api');
+
 });
 
 
