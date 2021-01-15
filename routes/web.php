@@ -88,6 +88,12 @@ Route::post('agenda/api', 'AgendaController@api')->name('agenda.api');
 Route::resource('pengumuman', 'PengumumanController');
 Route::post('pengumuman/api', 'PengumumanController@api')->name('pengumuman.api');
 
+Route::resource('prestasi', 'PrestasiController');
+Route::post('prestasi/api', 'PrestasiController@api')->name('prestasi.api');
+
+Route::resource('daftarsiswa', 'DaftarsiswaController');
+Route::post('daftarsiswa/api', 'DaftarsiswaController@api')->name('daftarsiswa.api');
+
 });
 
 

@@ -103,7 +103,7 @@
 
         <ul class="sidebar-menu">
             
-            <li class="header"><strong><b>PAUD</b></strong></li>
+            <li class="header"><strong><b>DATA PAUD</b></strong></li>
             <li class="header"><strong>PROFILE SEKOLAH</strong></li>
             <li class="treeview"><a href="{{ url('/sejarah') }}">
                 <i class="icon icon-book text-success s-18"></i> <span><Data>Sejarah</Data></span> <i
@@ -171,6 +171,17 @@
             </a>
             </li>
 
+            <li class="treeview"><a href="{{ url('/prestasi') }}">
+                <i class="icon icon-trophy  text-warning s-18"></i> <span><Data>Prestasi</Data></span> <i
+                    class="icon icon-angle-right s-18 pull-right"></i>
+            </a>
+            </li>
+
+            <li class="treeview"><a href="{{ url('/daftarsiswa') }}">
+                <i class="icon icon-school  text-info s-18"></i> <span><Data>Daftar siswa</Data></span> <i
+                    class="icon icon-angle-right s-18 pull-right"></i>
+            </a>
+            </li>
         </ul>
     </section>
 </aside>
