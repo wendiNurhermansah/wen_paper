@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use DataTables;
 use App\Models\berita;
@@ -58,9 +59,15 @@ class BeritaController extends Controller
 
         ]);
 
-        $file     = $request->file('gambar');
-        $fileName = time() . "." . $file->getClientOriginalName();
-        $request->file('gambar')->move("images/ava/", $fileName);
+        // $file     = $request->file('gambar');
+        // $fileName = time() . "." . $file->getClientOriginalName();
+        // $request->file('gambar')->move("images/ava/", $fileName);
+
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $fileName = rand() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('paud_storage/public', $fileName, 'sftp', 'public');
+        }
 
         $berita = new berita();
         $berita->judul = $request->judul;
@@ -116,7 +123,15 @@ class BeritaController extends Controller
      */
     public function destroy($id)
     {
-        berita::destroy($id);
+        $data = berita::findOrFail($id);
+      
+
+        $exist = $data->gambar;
+       
+            Storage::disk('sftp')->delete('/paud_storage/public/' . $exist);
+    
+
+        $data->delete();
         return response()->json([
             'massage' => 'Data Berhasil di hapus.'
         ]);
