@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\sambutan;
 use DataTables;
@@ -56,9 +57,11 @@ class SambutanController extends Controller
             'gambar' => 'required|mimes:png,jpg,jpeg|max:2024'
         ]);
 
-        $file     = $request->file('gambar');
-        $fileName = time() . "." . $file->getClientOriginalName();
-        $request->file('gambar')->move("images/ava/", $fileName);
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $fileName = rand() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('paud_storage/public', $fileName, 'sftp', 'public');
+        }
 
         $sambutan = new sambutan();
         $sambutan->isi_sambutan   =$request->isi_sambutan;
@@ -114,7 +117,16 @@ class SambutanController extends Controller
      */
     public function destroy($id)
     {
-        sambutan::destroy($id);
+        $data = sambutan::findOrFail($id);
+      
+
+        $exist = $data->gambar;
+       
+            Storage::disk('sftp')->delete('/paud_storage/public/' . $exist);
+    
+
+        $data->delete();
+
 
         return response()->jsons([
             'massage' => 'data berhasil di hapus.'

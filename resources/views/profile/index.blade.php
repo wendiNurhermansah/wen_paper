@@ -35,7 +35,7 @@
                                     <table id="dataTable" class="table table-striped table-bordered" style="width:100%">
                                         <thead>
                                             <th width="30">NO</th>
-                                            <th>ISI SAMBUTAN</th>
+                                            <th>ISI SEJARAH</th>
                                             <th>Gambar</th>
                                             <th width="60">AKSI</th>
                                         </thead>
@@ -54,7 +54,7 @@
                         <div class="card">
                             <div class="card-body">
                      <form class="needs-validation" id="form" method="POST"  enctype="multipart/form-data" novalidate>
-                        @csrf
+                        {{-- @csrf --}}
                         <div class="form-group">
                             <label for="isi">Isi Sambutan</label>
                             <input type="textarea" class="form-control @error('isi') is-invalid @enderror" id="isi" placeholder="masukan isi" name="isi" value="{{ old('isi') }}" required>
@@ -187,6 +187,12 @@
         $('#reset').show();
         $('#nama').focus();
     }
+
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+    });
 
     add();
     $('#form').on('submit', function (e) {

@@ -53,7 +53,7 @@
                         <div class="card">
                             <div class="card-body">
                      <form class="needs-validation" id="form" method="POST"  enctype="multipart/form-data" novalidate>
-                        @csrf
+                        {{-- @csrf --}}
                         
                         <div class="form-group">
                             <label for="isi_agenda">Isi Agenda</label>
@@ -110,6 +110,12 @@
         $('#reset').show();
         $('#nama').focus();
     }
+
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+    });
 
     add();
     $('#form').on('submit', function (e) {

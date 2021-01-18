@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use DataTables;
 use App\Models\prestasi;
@@ -56,9 +57,11 @@ class PrestasiController extends Controller
 
         ]);
 
-        $file     = $request->file('gambar');
-        $fileName = time() . "." . $file->getClientOriginalName();
-        $request->file('gambar')->move("images/ava/", $fileName);
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $fileName = rand() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('paud_storage/public', $fileName, 'sftp', 'public');
+        }
 
         $prestasi = new prestasi();
         $prestasi->n_prestasi = $request->n_prestasi;
@@ -112,8 +115,18 @@ class PrestasiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+
     {
-        prestasi::destroy($id);
+
+        $data = prestasi::findOrFail($id);
+      
+
+        $exist = $data->gambar;
+       
+            Storage::disk('sftp')->delete('/paud_storage/public/' . $exist);
+    
+
+        $data->delete();
         return response()->json([
             'massage' => 'data berhasil di hapus.'
         ]);

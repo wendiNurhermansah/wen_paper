@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use DataTables;
 use App\Models\pendidik;
@@ -56,9 +57,11 @@ class PendidikController extends Controller
             'gambar' => 'required|mimes:png,jpg,jpeg|max:2024'
         ]);
 
-        $file     = $request->file('gambar');
-        $fileName = time() . "." . $file->getClientOriginalName();
-        $request->file('gambar')->move("images/ava/", $fileName);
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $fileName = rand() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('paud_storage/public', $fileName, 'sftp', 'public');
+        }
 
         $pendidik = new pendidik();
         $pendidik->nama_pendidik   =$request->nama_pendidik;
@@ -112,7 +115,15 @@ class PendidikController extends Controller
      */
     public function destroy($id)
     {
-        pendidik::destroy($id);
+        $data = pendidik::findOrFail($id);
+      
+
+        $exist = $data->gambar;
+       
+            Storage::disk('sftp')->delete('/paud_storage/public/' . $exist);
+    
+
+        $data->delete();
 
         return response()->js([
             'message' => 'Data berhasil dihapus.'

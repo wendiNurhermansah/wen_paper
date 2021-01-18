@@ -55,7 +55,7 @@
                         <div class="card">
                             <div class="card-body">
                      <form class="needs-validation" id="form" method="POST"  enctype="multipart/form-data" novalidate>
-                        @csrf
+                        {{-- @csrf --}}
                         <div class="form-group">
                             <label for="n_prestasi">judul Prestasi</label>
                             <input type="textarea" class="form-control @error('n_prestasi') is-invalid @enderror" id="n_prestasi" placeholder="masukan judul prestasi" name="n_prestasi" value="{{ old('n_prestasi') }}" required>
@@ -197,6 +197,12 @@
         $('#reset').show();
         $('#nama').focus();
     }
+
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
 
     add();
     $('#form').on('submit', function (e) {

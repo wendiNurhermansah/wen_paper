@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use DataTables;
 use App\Models\daftar_siswa;
@@ -55,9 +56,11 @@ class DaftarsiswaController extends Controller
 
         ]);
 
-        $file     = $request->file('gambar');
-        $fileName = time() . "." . $file->getClientOriginalName();
-        $request->file('gambar')->move("images/ava/", $fileName);
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $fileName = rand() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('paud_storage/public', $fileName, 'sftp', 'public');
+        }
 
         $daftar_siswa = new Daftar_siswa();
         $daftar_siswa->nama_siswa = $request->nama_siswa;
@@ -111,7 +114,15 @@ class DaftarsiswaController extends Controller
      */
     public function destroy($id)
     {
-        daftar_siswa::destroy($id);
+        $data = daftar_siswa::findOrFail($id);
+      
+
+        $exist = $data->gambar;
+       
+            Storage::disk('sftp')->delete('/paud_storage/public/' . $exist);
+    
+
+        $data->delete();
         return response()->json([
             'massage' => 'data berhasil di hapus.'
         ]);

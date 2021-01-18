@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\sejarah;
 use DataTables;
@@ -60,9 +61,11 @@ class SejarahController extends Controller
             
         ]); 
 
-        $file     = $request->file('gambar');
-        $fileName = time() . "." . $file->getClientOriginalName();
-        $request->file('gambar')->move("images/ava/", $fileName);
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $fileName = rand() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('paud_storage/public', $fileName, 'sftp', 'public');
+        }
 
         $sejarah = new sejarah();
         $sejarah->isi    =$request->isi;
@@ -118,7 +121,15 @@ class SejarahController extends Controller
      */
     public function destroy($id)
     {
-        sejarah::destroy($id);
+        $data = sejarah::findOrFail($id);
+      
+
+        $exist = $data->gambar;
+       
+            Storage::disk('sftp')->delete('/paud_storage/public/' . $exist);
+    
+
+        $data->delete();
 
         return response()->js([
             'massage' => 'data berhasil di hapus.'
