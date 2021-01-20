@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use DataTables;
 use App\Models\gallery;
@@ -55,9 +56,11 @@ class GalleryController extends Controller
 
         ]);
 
-        $file     = $request->file('gambar');
-        $fileName = time() . "." . $file->getClientOriginalName();
-        $request->file('gambar')->move("images/ava/", $fileName);
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $fileName = rand() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('paud_storage/public', $fileName, 'sftp', 'public');
+        }
 
         $gallery = new gallery();
         $gallery->n_gallery = $request->n_gallery;
@@ -111,7 +114,16 @@ class GalleryController extends Controller
      */
     public function destroy($id)
     {
-        gallery::destroy($id);
+        $data = gallery::findOrFail($id);
+      
+
+        $exist = $data->gambar;
+       
+            Storage::disk('sftp')->delete('/paud_storage/public/' . $exist);
+    
+
+        $data->delete();
+
         return response()->json([
             'massage' => 'data berhasl di hapus.'
         ]);

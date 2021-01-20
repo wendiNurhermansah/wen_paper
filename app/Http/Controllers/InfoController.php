@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use DataTables;
 use App\Models\info_sekolah;
@@ -55,9 +56,12 @@ class InfoController extends Controller
 
         ]);
 
-        $file     = $request->file('gambar');
-        $fileName = time() . "." . $file->getClientOriginalName();
-        $request->file('gambar')->move("images/ava/", $fileName);
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $fileName = rand() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('paud_storage/public', $fileName, 'sftp', 'public');
+        }
+
 
         $info_sekolah = new info_sekolah();
         $info_sekolah->nama_fasilitas = $request->nama_fasilitas;
@@ -111,7 +115,15 @@ class InfoController extends Controller
      */
     public function destroy($id)
     {
-        info_sekolah::destroy($id);
+        $data = info_sekolah::findOrFail($id);
+      
+
+        $exist = $data->gambar;
+       
+            Storage::disk('sftp')->delete('/paud_storage/public/' . $exist);
+    
+
+        $data->delete();
 
         return respomse()->json([
             'massage' => 'data berhasl di hapus.'
